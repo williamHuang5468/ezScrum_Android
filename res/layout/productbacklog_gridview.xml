@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/productbacklog_gridview_background"
+    android:orientation="horizontal" >
+
+            <GridView
+                android:id="@+id/productBacklogGridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:horizontalSpacing="5dp"
+                android:verticalSpacing="25dp"
+                android:numColumns="auto_fit"
+                android:paddingTop="25dp"
+                android:fadingEdge="vertical"
+                android:fadingEdgeLength="75dp"
+                android:requiresFadingEdge="vertical"
+                android:overScrollMode="always"
+                android:columnWidth="280dp"  
+                android:stretchMode="columnWidth" >
+            </GridView>
+                    
+</LinearLayout>

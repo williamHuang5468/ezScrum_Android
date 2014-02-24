@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="white_smoke">#F5F5F5</color>
+    <color name="blue">#55A8EF</color>
+    <color name="black">#000000</color>
+    <color name="purple">#611BA3</color>
+    <color name="transparent">#00000000</color>
+    <color name="light_black">#333333</color>
+    <color name="item_story_background">#EFA2A1</color>
+    <color name="item_story_background_pressed">#E77573</color>
+    <color name="item_story_background_line">#202b0807</color>
+    <color name="item_task_background">#BFBFFF</color>
+    <color name="item_task_background_pressed">#8989FF</color>
+    <color name="item_task_background_line">#20000038</color>
+    
+</resources>

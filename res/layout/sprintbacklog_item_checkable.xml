@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/sprintBacklog_item_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:visibility="invisible"
+        android:src="@android:drawable/ic_input_add" />
+    
+    <TextView
+        android:id="@+id/sprintBacklog_storyID"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center|left"
+        android:text="storyID"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+<!--     <TextView
+        android:id="@+id/sprintBacklog_tag"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="tag"
+        android:textAppearance="?android:attr/textAppearanceLarge" /> -->
+
+    <TextView
+        android:id="@+id/sprintBacklog_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:text="name"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/sprintBacklog_importance"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="importance"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/sprintBacklog_value"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="value"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/sprintBacklog_estimate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="estimate"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+<!--     <TextView
+        android:id="@+id/sprintBacklog_handler"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="handler"
+        android:textAppearance="?android:attr/textAppearanceLarge" /> -->
+
+</LinearLayout>

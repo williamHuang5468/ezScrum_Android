@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/projectlist_background">
+    <!-- android:background="#c0c0c0c0"> -->
+
+    <fragment
+        android:id="@+id/projectListFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:name="ntut.mobile.ezscrum.view.projectlist.ProjectListItemFragment" />
+
+    <fragment
+        android:id="@+id/projectListItemInfoFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:name="ntut.mobile.ezscrum.view.projectlist.ProjectListItemInfoFragment" />
+
+</LinearLayout>

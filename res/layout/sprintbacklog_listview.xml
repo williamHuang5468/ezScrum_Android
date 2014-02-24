@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="0"
+        android:gravity="center">
+        <Button
+            android:id="@+id/sprintBacklog_left_imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/button_previous"
+            android:contentDescription="previous_sprint"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <Spinner
+            android:id="@+id/sprintBacklog_sprintID_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="sprintID"
+            android:textAppearance="?android:attr/textAppearanceLarge" android:layout_marginLeft="6dp" android:layout_marginRight="6dp"/>
+         <Button
+            android:id="@+id/sprintBacklog_right_imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/button_next"
+            android:contentDescription="next_sprint"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+    <RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+	    <TextView
+	        android:id="@+id/sprintBacklog_type"
+	        android:layout_width="80dip"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBottom="@+id/sprintBacklog_name"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:gravity="center"
+	        android:paddingTop="5dip"
+	        android:paddingBottom="5dip"
+	        android:textSize="20pt"
+	        android:textStyle="bold" />
+	        
+	    <TextView
+	        android:id="@+id/sprintBacklog_name"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_toLeftOf="@+id/sprintBacklog_value"
+	        android:layout_toRightOf="@id/sprintBacklog_type"
+	        android:gravity="center|left"
+	        android:paddingBottom="5dip"
+	        android:textSize="14pt" />
+	
+	    <TextView
+	        android:id="@+id/sprintBacklog_estimate"
+	        android:layout_width="80dip"
+	        android:layout_height="wrap_content"
+	        android:layout_toLeftOf="@+id/sprintBacklog_importance"
+	        android:layout_centerVertical="true"
+	        android:gravity="center"
+	        android:textSize="18pt"
+	        android:textStyle="bold"
+	        android:layout_margin="3dip"
+	        android:padding="3dip"
+	        android:text="EST" />
+	
+	    <TextView
+	        android:id="@+id/sprintBacklog_importance"
+	        android:layout_width="80dip"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_centerVertical="true"
+	        android:gravity="center"
+	        android:textSize="18pt"
+	        android:textStyle="bold"
+	        android:layout_margin="3dip"
+	        android:padding="3dip"
+	        android:text="IMP" />
+	
+	    <TextView
+	        android:id="@+id/sprintBacklog_value"
+	        android:layout_width="80dip"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_centerVertical="true"
+	        android:layout_margin="3dip"
+	        android:layout_toLeftOf="@+id/sprintBacklog_estimate"
+	        android:gravity="center"
+	        android:padding="3dip"
+	        android:textSize="18pt"
+	        android:textStyle="bold"
+	        android:text="VAL" />
+
+	</RelativeLayout>
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <LinearLayout
+            android:id="@+id/sprintBacklog_item_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/sprintBacklog_story_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true" >
+        </ListView>
+
+    </LinearLayout>
+	-->
+</LinearLayout>

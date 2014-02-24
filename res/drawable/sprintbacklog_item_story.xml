@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- 被按下時的背景 -->
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="@color/item_story_background_pressed"/>
+        </shape>
+    </item>
+    <item>
+        <layer-list>
+	        <!-- 在左邊的線 -->
+	        <item android:bottom="-29dp" android:top="-33dp" android:right="-33dp" android:left="0dp">
+		        <shape android:shape="rectangle">
+		            <stroke android:width="30px" android:color="@color/item_story_background"/>
+		            <solid android:color="#00FFFFFF"/>
+		        </shape>
+	        </item>
+	        <!-- 在底部的線 -->
+	        <item android:bottom="0dp" android:top="-3dp" android:right="-3dp" android:left="-3dp">
+		        <shape android:shape="rectangle">
+		            <stroke android:width="3px" android:color="@color/item_story_background_line"/>
+		            <solid android:color="#00FFFFFF"/>
+		        </shape>
+	        </item>
+        </layer-list>
+    </item>
+</selector>

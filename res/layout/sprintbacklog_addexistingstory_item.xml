@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <CheckBox android:id="@+id/sprintBacklog_addexistingstory_story_checkBox"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:checked="false"
+        android:clickable="false"
+        android:focusableInTouchMode="false"
+        android:focusable="false"/>
+    <TextView
+        android:id="@+id/sprintBacklog_addexistingstory_storyID"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/id"
+        android:textAppearance="?android:attr/textAppearanceLarge" android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/sprintBacklog_addexistingstory_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:text="@string/name"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/sprintBacklog_addexistingstory_importance"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/importance"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/sprintBacklog_addexistingstory_value"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/value"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/sprintBacklog_addexistingstory_estimation"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/estimation"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</LinearLayout>

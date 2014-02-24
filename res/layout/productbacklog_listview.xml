@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:id="@+id/productbacklog_viewlayout" >
+		<LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="32dp" 
+		    android:orientation="horizontal"
+		    android:background="@android:color/white">
+		    
+		    <TextView
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/name"
+			    android:textColor="@android:color/black"
+			    android:textStyle="bold"
+		        android:layout_weight="3"
+		        android:gravity="center"
+		        android:textSize="24dip" >
+		    </TextView>
+		    
+			<LinearLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content" 
+			    android:orientation="horizontal"
+			    android:layout_weight="7">		    
+			    <TextView
+			        android:layout_width="80dp"
+			        android:layout_height="wrap_content"
+			        android:text="VAL"
+			        android:textColor="@android:color/black"
+			        android:textStyle="bold"
+			        android:gravity="center"
+			        android:layout_margin="3dp"
+			        android:textSize="24dip" >
+			    </TextView>
+			    <TextView
+			        android:layout_width="80dp"
+			        android:layout_height="wrap_content"
+			        android:text="EST"
+			        android:textColor="@android:color/black"
+			        android:textStyle="bold"
+			        android:gravity="center"
+			        android:layout_margin="3dp"
+			        android:textSize="24dip" >
+			    </TextView>
+			    <TextView
+			        android:layout_width="80dp"
+			        android:layout_height="wrap_content"
+			        android:text="IMP"
+			        android:textColor="@android:color/black"
+			        android:textStyle="bold"
+			        android:gravity="center"
+			        android:layout_margin="3dp"
+			        android:textSize="24dip" >
+			    </TextView>
+		    </LinearLayout>
+		</LinearLayout>
+		<ListView android:id="@+id/productbacklog_listview"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent" >
+		</ListView>
+</LinearLayout>

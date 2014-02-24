@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/storycard_border"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:baselineAligned="false" >
+
+    <LinearLayout
+        android:id="@+id/thumbLinearLayoutStoryLeftSide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingRight="3dp"
+        android:baselineAligned="false" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:text="Story Name"
+                android:textColor="#000000"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/thumbStoryName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="textMultiLine"
+                android:textColor="#000000"
+                android:background="@drawable/storyitem_editborder"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:text="Notes"
+                android:textColor="#000000"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/thumbStoryNote"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/storyitem_editborder"
+                android:inputType="textMultiLine"
+                android:textColor="#000000"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:text="How to Demo"
+                android:textColor="#000000"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/thumbStoryHowToDemo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/storyitem_editborder"
+                android:inputType="textMultiLine"
+                android:textColor="#000000"
+                android:textSize="18dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/thumbLinearLayoutStoryrightSide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:orientation="vertical"
+        android:paddingLeft="3dp"
+		android:baselineAligned="false" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:text="Importance"
+                android:textColor="#000000"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/thumbStoryImportance"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/storyitem_editborder"
+                android:gravity="center"
+                android:inputType="number"
+                android:textColor="#000000"
+                android:textSize="24dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:text="Value"
+                android:textColor="#000000"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/thumbStoryValue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/storyitem_editborder"
+                android:gravity="center"
+                android:inputType="number"
+                android:textColor="#000000"
+                android:textSize="24dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:text="Estimation"
+                android:textColor="#000000"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/thumbStoryEstimation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/storyitem_editborder"
+                android:gravity="center"
+                android:inputType="number"
+                android:textColor="#000000"
+                android:textSize="24dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

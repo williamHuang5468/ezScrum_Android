@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/addStory"
+        android:icon="@drawable/button_newstory"
+        android:showAsAction="ifRoom|withText"
+        android:title="Add Story"/>
+    
+    <item
+        android:id="@+id/addExistingStory"
+        android:icon="@drawable/button_newstory"
+        android:showAsAction="ifRoom|withText"
+        android:title="Add Existing Story"/>
+
+    <item
+        android:id="@+id/refreshSprintBacklog"
+        android:icon="@drawable/button_refresh"
+        android:showAsAction="ifRoom|withText"
+        android:title="Refresh"/>
+    
+</menu>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+	
+	<TextView 
+	    android:id="@+id/projectIDTextView"
+	    android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:text="projectID"
+		android:textColor="#ff000000"
+		android:textSize="28sp"
+		android:textStyle="bold"
+		android:padding="1dp"
+		android:layout_margin="2dp"/>
+	<TextView 
+	    android:id="@+id/projectDemoDateTextView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/projectIDTextView"
+		android:text="projectDemoDate"
+		android:textColor="#ff000000"
+		android:textSize="20sp"
+		android:padding="1dp"
+		android:layout_margin="2dp"/>
+<!--  	<RelativeLayout android:id="@+id/detailRelativeLayout"
+     	android:layout_height="wrap_content"
+     	android:layout_width="wrap_content"
+     	android:descendantFocusability="blocksDescendants">      
+    	<ImageButton  android:id="@+id/viewProjectListItemDetailImageButton"
+        	android:layout_width="wrap_content"
+       	 	android:layout_height="wrap_content"
+        	android:src="@drawable/navigation_previous_item"
+        	android:background="@null" 
+        	android:focusable="false"
+        	android:layout_alignParentRight="true"
+        	android:layout_centerVertical="true"
+        	android:visibility="invisible"/>
+	</RelativeLayout> -->
+</RelativeLayout>

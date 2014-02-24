@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/taskNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/taskEstimationTextView"
+        android:gravity="center_vertical|right"
+        android:text="Name:" />
+
+    <TextView
+        android:id="@+id/taskEstimationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/taskNameEditText"
+        android:gravity="center_vertical|right"
+        android:text="Estimation:" />
+
+    <TextView
+        android:id="@+id/taskNotesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/taskEstimetionEditText"
+        android:layout_alignRight="@+id/taskEstimationTextView"
+        android:gravity="center_vertical|right"
+        android:text="Notes:" />
+
+    <EditText
+        android:id="@+id/taskNameEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/taskNameTextView"
+        android:singleLine="true"
+        android:hint="你想做什麼事情？"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/taskNotesEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/taskEstimetionEditText"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/taskNotesTextView"
+        android:hint="有什麼需要紀錄的嗎？"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/taskEstimetionEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/taskNameEditText"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/taskEstimationTextView"
+        android:ems="10"
+        android:inputType="number" />
+
+</RelativeLayout>

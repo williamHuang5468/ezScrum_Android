@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/productbackloglist"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal"
+    android:paddingBottom="2dip"
+    android:paddingLeft="10dip"
+    android:background="#ffffff">
+    
+    <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background="#ffffff"
+	    android:orientation="vertical"
+	    android:layout_weight="3">
+	    <TextView
+	        android:id="@+id/storyIdTextView"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:textColor="@android:color/holo_blue_light"
+	        android:textSize="15dip" android:layout_marginTop="4dip">
+	    </TextView>
+	
+	    <TextView
+	        android:id="@+id/storyNameTextView"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:textColor="@color/black"
+	        android:textSize="25dip" >
+	    </TextView>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+        android:background="#ffffff"
+	    android:orientation="vertical"
+        android:layout_weight="7">
+	    <LinearLayout
+	        android:id="@+id/productbacklog_tag_linaerLayout"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:background="#ffffff"
+		    android:orientation="horizontal">
+	    </LinearLayout>
+	    <LinearLayout
+        android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+		    <TextView
+		        android:id="@+id/story_value_TextView"
+		        android:layout_width="80dp"
+		        android:layout_height="64dp"
+		        android:textColor="@color/black"
+		        android:background="@drawable/storyitmeinfo_border_value"
+		        android:gravity="center"
+		        android:textSize="32dip"
+		        android:textStyle="bold"
+		        android:layout_margin="3dp">
+		    </TextView>
+		    <TextView
+		        android:id="@+id/story_estimataion_TextView"
+		        android:layout_width="80dp"
+		        android:layout_height="64dp"
+		        android:textColor="@color/black"
+		        android:background="@drawable/storyitmeinfo_border_estimation"
+		        android:gravity="center"
+		        android:textSize="32dip"
+		        android:textStyle="bold"
+		        android:layout_margin="3dp">
+		    </TextView>
+		    <TextView
+		        android:id="@+id/story_importance_TextView"
+		        android:layout_width="80dp"
+		        android:layout_height="64dp"
+		        android:textColor="@color/black"
+		        android:background="@drawable/storyitmeinfo_border_importance"
+		        android:gravity="center"
+		        android:textSize="32dip"
+		        android:textStyle="bold"
+		        android:layout_margin="3dp">
+		    </TextView>
+	    </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

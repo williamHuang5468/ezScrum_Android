@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dip"
+    android:layout_marginBottom="5dip" >
+
+    <TextView
+        android:id="@+id/sprintBacklog_type"
+        android:layout_width="80dip"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/sprintBacklog_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:text="S"
+        android:textSize="20pt"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/sprintBacklog_storyID"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/sprintBacklog_type"
+        android:layout_toLeftOf="@+id/sprintBacklog_value"
+        android:gravity="center|left"
+        android:textSize="10pt"
+        android:paddingTop="5dip"
+        android:text="storyID" />
+        
+    <TextView
+        android:id="@+id/sprintBacklog_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/sprintBacklog_type"
+        android:layout_toLeftOf="@+id/sprintBacklog_value"
+        android:layout_below="@id/sprintBacklog_storyID"
+        android:gravity="center|left"
+        android:textSize="14pt"
+        android:paddingBottom="5dip"
+        android:text="name" />
+
+    <TextView
+        android:id="@+id/sprintBacklog_estimate"
+        android:layout_width="80dip"
+        android:layout_height="64dip"
+        android:layout_toLeftOf="@+id/sprintBacklog_importance"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black"
+        android:background="@drawable/storyitmeinfo_border_estimation"
+        android:gravity="center"
+        android:textSize="20pt"
+        android:textStyle="bold"
+        android:layout_margin="3dip"
+        android:padding="3dip" />
+
+    <TextView
+        android:id="@+id/sprintBacklog_importance"
+        android:layout_width="80dip"
+        android:layout_height="64dip"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black"
+        android:background="@drawable/storyitmeinfo_border_importance"
+        android:gravity="center"
+        android:textSize="20pt"
+        android:textStyle="bold"
+        android:layout_margin="3dip"
+        android:padding="3dip" />
+
+    <TextView
+        android:id="@+id/sprintBacklog_value"
+        android:layout_width="80dip"
+        android:layout_height="64dip"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="3dip"
+        android:layout_toLeftOf="@+id/sprintBacklog_estimate"
+        android:background="@drawable/storyitmeinfo_border_value"
+        android:gravity="center"
+        android:padding="3dip"
+        android:textColor="@color/black"
+        android:textSize="20pt"
+        android:textStyle="bold" />
+
+</RelativeLayout>

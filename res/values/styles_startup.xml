@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 登入頁直向設定 -->
+    <style name="LoginFormContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>
+    <style name="SetServerView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>    
+    <style name="LoginFormEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+    <style name="LoginButton">
+	    <item name="android:layout_width">fill_parent</item>
+	    <item name="android:layout_height">wrap_content</item>
+	    <item name="android:layout_margin">3dp</item>
+	    <item name="android:textColor">#ffffff</item>
+	    <item name="android:gravity">center</item>
+	    <item name="android:textSize">16sp</item>
+	    <item name="android:textStyle">bold</item>
+	    <item name="android:shadowColor">#000000</item>
+	    <item name="android:shadowDx">1</item>
+	    <item name="android:shadowDy">1</item>
+	    <item name="android:shadowRadius">2</item>
+	</style>
+    <style name="LoginFormLogo">
+	    <item name="android:layout_width">match_parent</item>
+	    <item name="android:layout_height">100dp</item>
+	    <item name="android:layout_marginBottom">15dp</item>
+	    <item name="android:paddingBottom">10dp</item>
+    </style>
+    <style name="StartupView"> 
+	    <item name="android:layout_width">fill_parent</item>
+	    <item name="android:layout_height">wrap_content</item>
+	</style>   
+    <style name="LoginView"> 
+	    <item name="android:layout_width">fill_parent</item>
+	    <item name="android:layout_height">wrap_content</item>
+	</style>   
+    <style name="AddServerButton">
+	    <item name="android:layout_width">match_parent</item>
+	    <item name="android:layout_height">match_parent</item>
+	    <item name="android:textColor">#ffffff</item>
+	    <item name="android:gravity">center</item>
+	    <item name="android:textSize">10sp</item>
+	    <item name="android:textStyle">bold</item>
+	    <item name="android:shadowColor">#000000</item>
+	    <item name="android:shadowDx">1</item>
+	    <item name="android:shadowDy">1</item>
+	    <item name="android:shadowRadius">2</item>
+	</style>
+    <style name="ServerList">
+	    <item name="android:textSize">16sp</item>
+	    <item name="android:layout_width">wrap_content</item>
+	    <item name="android:layout_height">wrap_content</item>
+	    <item name="android:layout_marginTop">4dp</item>
+	    <item name="android:layout_marginBottom">4dp</item>
+	    <item name="android:layout_marginLeft">8dp</item>
+	</style>
+	
+    <!-- 登入頁橫向設定 -->
+    <style name="LoginButtonLandscape">
+	    <item name="android:layout_width">match_parent</item>
+	    <item name="android:layout_height">match_parent</item>
+	    <item name="android:textColor">#ffffff</item>
+	    <item name="android:gravity">center</item>
+	    <item name="android:textSize">25sp</item>
+	    <item name="android:textStyle">bold</item>
+	    <item name="android:shadowColor">#000000</item>
+	    <item name="android:shadowDx">1</item>
+	    <item name="android:shadowDy">1</item>
+	    <item name="android:shadowRadius">2</item>
+        <item name="android:layout_margin">8dp</item>
+	</style>
+</resources>

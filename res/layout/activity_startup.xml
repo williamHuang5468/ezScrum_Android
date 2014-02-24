@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white_smoke" >
+    <LinearLayout 
+        style="@style/StartupView"
+		android:contentDescription="StartupView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical" >
+        <LinearLayout
+            android:id="@+id/login_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone" >
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp" />
+            <TextView
+                android:id="@+id/login_status_message"
+				android:contentDescription="login_status_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="@string/login_progress_signing_in"
+                android:textColor="@color/light_black"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+        <ScrollView
+            android:id="@+id/login_form"
+			android:contentDescription="login_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            <LinearLayout
+                android:id="@+id/login_main_view"
+				android:contentDescription="login_main_view"
+                style="@style/LoginFormContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+			    <ImageView
+			        android:id="@+id/ezScrumLogo"
+                	style="@style/LoginFormLogo"
+			        android:src="@drawable/ezscrum_logo_soft" />
+			    <LinearLayout
+                	android:id="@+id/login_view"
+                	android:visibility="gone"
+	                android:layout_width="match_parent"
+	                android:layout_height="0dp"
+                   	android:layout_weight="1"
+	                android:orientation="vertical" >
+	                <LinearLayout
+	                	android:id="@+id/set_server_view"
+	                	style="@style/SetServerView"
+		                android:orientation="horizontal" >
+				        <Spinner
+				            android:id="@+id/server_list"
+				            android:contentDescription="server_list"
+				            android:layout_width="match_parent"
+				            android:layout_height="wrap_content"
+                   			android:layout_weight="0.2" />
+						<Button
+		                    android:id="@+id/add_server_button"
+				            android:contentDescription="add_server_button"
+		                    style="@style/AddServerButton"
+                   			android:layout_weight="0.8"
+                   			android:drawablePadding="2dp"
+                   			android:drawableLeft="@drawable/ic_add"
+		                    android:background="@drawable/button_blue"
+		                    android:textSize="20sp" />
+				 	</LinearLayout>
+	                <EditText
+	                    android:id="@+id/account"
+				        android:contentDescription="account"
+	                    style="@style/LoginFormEditText"
+	                    android:hint="@string/prompt_account"
+	                    android:inputType="text"
+	                    android:maxLines="1"
+	                    android:singleLine="true" >
+	                </EditText>
+	                <EditText
+	                    android:id="@+id/password"
+				        android:contentDescription="password"
+	                    style="@style/LoginFormEditText"
+	                    android:hint="@string/prompt_password"
+	                    android:imeActionId="@+id/login"
+	                    android:imeActionLabel="@string/action_sign_in_short"
+	                    android:imeOptions="actionUnspecified"
+	                    android:inputType="textPassword"
+	                    android:maxLines="1"
+	                    android:singleLine="true" />
+	                <Button
+	                    android:id="@+id/sign_in_button"
+				        android:contentDescription="sign_in_button"
+	                    style="@style/LoginButton"
+	                    android:background="@drawable/button_blue"
+	                    android:text="@string/action_sign_in" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</RelativeLayout>

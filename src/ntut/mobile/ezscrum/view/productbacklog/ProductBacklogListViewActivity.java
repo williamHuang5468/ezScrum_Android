@@ -1,6 +1,8 @@
 package ntut.mobile.ezscrum.view.productbacklog;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import ntut.mobile.ezscrum.controller.productbacklog.ProductBacklogItemManager;
@@ -9,6 +11,7 @@ import ntut.mobile.ezscrum.model.TagObject;
 import ntut.mobile.ezscrum.util.EzScrumAppUtil;
 import ntut.mobile.ezscrum.view.BaseActivity;
 import ntut.mobile.ezscrum.view.R;
+import android.R.integer;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -22,8 +25,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 public class ProductBacklogListViewActivity extends BaseActivity implements Runnable  {
 	private String mProjectID;
@@ -35,6 +43,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	private ProductBacklogListViewAdapter mProductBacklogListViewAdapter;
 	private ProgressDialog mProgressDialog;
 	private MenuItem mRefreshMenuItem;
+	private Comparator mComparator;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +55,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		mProductBacklogListView.setSelector( R.drawable.projectitem_selector );
 		
 		mProductBacklogItemManager = new ProductBacklogItemManager();
+		mComparator = new ImportanceDesComparator();
 		
 		//	從前一個activity取得資料
 		Bundle bundle = this.getIntent().getExtras();
@@ -86,8 +96,67 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	        case R.id.changeViewProductBacklog:
 	        	onChangeViewClick(item);
 	        	break;
+	        case R.id.filterStory:
+	        	onFilterStory(item);
+	        	break;
+	        case R.id.quickEdit:
+	        	onQuickEdit(item);
+	        	break;
 	    }
 	    return super.onOptionsItemSelected(item);
+	}
+	
+	/**
+	 * 點擊 Filter Story 事件
+	 * @param item
+	 */
+	public void onFilterStory(MenuItem item) {
+		LayoutInflater inflater = LayoutInflater.from(mContext);
+		final View filterAlertView = inflater.inflate(R.layout.productbacklog_filter, null);
+		
+		Spinner spinner = (Spinner)filterAlertView.findViewById(R.id.filterType);
+		String[] filterType = {"Important","Value","Estimation"};
+	    ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, filterType);
+		spinner.setAdapter(listAdapter);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext); // 
+		builder.setTitle("Filter Story");
+		builder.setView( filterAlertView );
+		builder.setPositiveButton("Descending", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				mComparator = new ImportanceDesComparator();
+				refreshAdapter();
+			}
+		});
+		builder.setNegativeButton("Ascending", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				mComparator = new ImportanceAcsComparator();
+				refreshAdapter();
+			}
+		});
+		AlertDialog dialog = builder.create();
+		dialog.show();
+		dialog.setCanceledOnTouchOutside(false);
+	}
+	
+	/**
+	 * 點擊 Quick Edit 事件
+	 * @param item
+	 */
+	public void onQuickEdit(MenuItem item) {
+		LayoutInflater inflater = LayoutInflater.from(mContext); // ?
+		final View storyCardView = inflater.inflate(R.layout.storyitem, null); // selection the layout
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext); // 
+		builder.setTitle("Quick Edit");
+		builder.setView( storyCardView );
+		builder.setPositiveButton("Save", null);
+		builder.setNegativeButton("Cancel", null);
+		AlertDialog dialog = builder.create();
+		dialog.show();
+		dialog.setCanceledOnTouchOutside(false);
 	}
 	
 	/**
@@ -121,7 +190,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	 * @param item
 	 */
 	public void onManageTagClick(MenuItem item) {
-//		refreshAdapter();
+		refreshAdapter();
 	}
 	
 	/**
@@ -173,8 +242,10 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		return story;
 	}
 	
+	
 	private void initialProductBacklogListViewAdpater() {
 		mStoryList = mProductBacklogItemManager.retrieveProductBacklogAllItems(mProjectID);
+		Collections.sort(mStoryList, mComparator);
 		mTagList = mProductBacklogItemManager.readProductBacklogTagList(mProjectID);
 		mProductBacklogListViewAdapter = new ProductBacklogListViewAdapter(ProductBacklogListViewActivity.this, mStoryList, mTagList);
 		mProductBacklogListViewAdapter.setProjectInformation(mProjectID);
@@ -192,7 +263,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	}
 
 	public void run() {
-		//	設定 product backlog list view adapter並顯示
+		//	設定 product backlog list view adapter並顯示 
 		initialProductBacklogListViewAdpater();	//	透過web service取得product backlog所需的資料
 		handler.sendEmptyMessage(0);
 	}
@@ -205,5 +276,37 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 			mProgressDialog.dismiss(); // 將Progress關閉
 		}
 	};
+	
+	private class ImportanceAcsComparator implements Comparator<StoryObject> {
+		public int compare(StoryObject firstObject, StoryObject secondObject) {
+			return Integer.parseInt(firstObject.get_importance())-Integer.parseInt(secondObject.get_importance());
+		}
+	}
+	private class ImportanceDesComparator implements Comparator<StoryObject> {
+		public int compare(StoryObject firstObject, StoryObject secondObject) {
+			return Integer.parseInt(secondObject.get_importance())-Integer.parseInt(firstObject.get_importance());
+		}
+	}
 
+	private class ValueAcsComparator implements Comparator<StoryObject> {
+		public int compare(StoryObject firstObject, StoryObject secondObject) {
+			return Integer.parseInt(firstObject.get_value())-Integer.parseInt(secondObject.get_value());
+		}
+	}
+	private class ValueDesComparator implements Comparator<StoryObject> {
+		public int compare(StoryObject firstObject, StoryObject secondObject) {
+			return Integer.parseInt(secondObject.get_value())-Integer.parseInt(firstObject.get_value());
+		}
+	} 
+	
+	private class EstimationAcsComparator implements Comparator<StoryObject> {
+		public int compare(StoryObject firstObject, StoryObject secondObject) {
+			return Integer.parseInt(firstObject.get_estimation())-Integer.parseInt(secondObject.get_estimation());
+		}
+	}
+	private class EstimationDesComparator implements Comparator<StoryObject> {
+		public int compare(StoryObject firstObject, StoryObject secondObject) {
+			return Integer.parseInt(secondObject.get_estimation())-Integer.parseInt(firstObject.get_estimation());
+		}
+	} 
 }

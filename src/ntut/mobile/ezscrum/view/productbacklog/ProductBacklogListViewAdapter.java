@@ -169,7 +169,8 @@ public class ProductBacklogListViewAdapter extends BaseAdapter {
 	}
 	
 	public ImageButton newImageButton(final StoryObject story, final TagObject tag, final LinearLayout productbacklog_tag_linaerLayout){
-		int tagImageResource = pairTagAndImage.get(tag.getTagName());
+//		int tagImageResource = pairTagAndImage.get(tag.getTagName());
+		int tagImageResource = 0;
 		final ImageButton newTagImageButton = new ImageButton(context);
 		newTagImageButton.setBackgroundResource(tagImageResource);
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);

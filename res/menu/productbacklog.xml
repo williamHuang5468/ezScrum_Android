@@ -2,26 +2,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/manageTagProductBacklog"
-        android:icon="@drawable/manage_tag"
-        android:showAsAction="ifRoom|withText"
-        android:title="Tag"/>
-    
-    <item
         android:id="@+id/addBackloggedItem"
         android:icon="@drawable/button_newstory"
         android:showAsAction="ifRoom|withText"
         android:title="Add Story"/>
-    
+    <item
+        android:id="@+id/quickEdit"
+        android:showAsAction="ifRoom|withText"
+        android:title="Quick Edit">
+    </item>
     <item
         android:id="@+id/refreshProductBacklog"
         android:icon="@drawable/button_refresh"
         android:showAsAction="ifRoom|withText"
         android:title="Refresh"/>
-    
+    <item
+        android:id="@+id/filterStory"
+        android:showAsAction="ifRoom|withText"
+        android:title="Filter Story">
+    </item>
     <item
         android:id="@+id/changeViewProductBacklog"
         android:icon="@drawable/grid_view"
-        android:showAsAction="ifRoom|withText"
         android:title="Change View"/>
+    
+    <item android:id="@+id/manageTagProductBacklog" 
+        android:icon="@drawable/manage_tag"
+        android:title="Tag" />
+
 </menu>

@@ -29,6 +29,7 @@ public class CheckLoginInfoThread extends BaseThread {
 	@Override
 	protected void handleWebServiceUrl() {
 		mUrl = WebServiceUrlMaker.getInstance().combineUrlWithoutProjectID("user/login");
+		System.out.println("mUrl: " + mUrl);
 	}
 
 	@Override

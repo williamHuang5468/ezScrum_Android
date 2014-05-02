@@ -115,24 +115,29 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		final View filterAlertView = inflater.inflate(R.layout.productbacklog_filter, null);
 		
 		Spinner spinner = (Spinner)filterAlertView.findViewById(R.id.filterType);
-		String[] filterType = {"Important","Value","Estimation"};
+		String[] filterType = {"Value","Estimation","Important"};
 	    ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, filterType);
 		spinner.setAdapter(listAdapter);
-		
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext); // 
 		builder.setTitle("Filter Story");
 		builder.setView( filterAlertView );
+		
 		builder.setPositiveButton("Descending", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				mComparator = new ImportanceDesComparator();
+				Spinner spinner = (Spinner)filterAlertView.findViewById(R.id.filterType);
+				String getFilterItem = spinner.getSelectedItem().toString();
+				setDesFilter(getFilterItem);
+				
 				refreshAdapter();
 			}
 		});
 		builder.setNegativeButton("Ascending", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				mComparator = new ImportanceAcsComparator();
+				Spinner spinner = (Spinner)filterAlertView.findViewById(R.id.filterType);
+				String getFilterItem = spinner.getSelectedItem().toString();
+				setAcsFilter(getFilterItem);
 				refreshAdapter();
 			}
 		});
@@ -141,15 +146,38 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		dialog.setCanceledOnTouchOutside(false);
 	}
 	
+	public void setDesFilter(String getFilterItem){
+		if(getFilterItem.equals("Value")){
+			mComparator = new ValueDesComparator();
+		}
+		else if(getFilterItem.equals("Estimation")){
+			mComparator = new EstimationDesComparator();
+		}
+		else{
+			mComparator = new ImportanceDesComparator();
+		}
+	}
+	
+	public void setAcsFilter(String getFilterItem){
+		if(getFilterItem.equals("Value")){
+			mComparator = new ValueAcsComparator();
+		}
+		else if(getFilterItem.equals("Estimation")){
+			mComparator = new EstimationAcsComparator();
+		}
+		else{
+			mComparator = new ImportanceAcsComparator();
+		}
+	}
 	/**
 	 * 點擊 Quick Edit 事件
 	 * @param item
 	 */
 	public void onQuickEdit(MenuItem item) {
-		LayoutInflater inflater = LayoutInflater.from(mContext); // ?
-		final View storyCardView = inflater.inflate(R.layout.storyitem, null); // selection the layout
+		LayoutInflater inflater = LayoutInflater.from(mContext);
+		final View storyCardView = inflater.inflate(R.layout.storyitem, null);
 		
-		AlertDialog.Builder builder = new AlertDialog.Builder(mContext); // 
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext); 
 		builder.setTitle("Quick Edit");
 		builder.setView( storyCardView );
 		builder.setPositiveButton("Save", null);

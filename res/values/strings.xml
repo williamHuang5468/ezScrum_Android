@@ -17,4 +17,11 @@
     <string name="add_existed_task">Add existed task</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="filter_type">Filter Type</string>
+    <string name="filter_story">Filter Story</string>
+    <string name="Save">Save</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Reference">Reference</string>
+    
+    
 </resources>

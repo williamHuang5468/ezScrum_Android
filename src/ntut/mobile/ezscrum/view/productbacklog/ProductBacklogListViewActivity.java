@@ -11,7 +11,6 @@ import ntut.mobile.ezscrum.model.TagObject;
 import ntut.mobile.ezscrum.util.EzScrumAppUtil;
 import ntut.mobile.ezscrum.view.BaseActivity;
 import ntut.mobile.ezscrum.view.R;
-import android.R.integer;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -25,13 +24,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 public class ProductBacklogListViewActivity extends BaseActivity implements Runnable  {
 	private String mProjectID;
@@ -43,7 +39,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	private ProductBacklogListViewAdapter mProductBacklogListViewAdapter;
 	private ProgressDialog mProgressDialog;
 	private MenuItem mRefreshMenuItem;
-	private Comparator mComparator;
+	private Comparator<StoryObject> mComparator;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +48,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		setTitle(R.string.productBacklog);
 		mContext = this;
 		mProductBacklogListView = (ListView) findViewById(R.id.productbacklog_listview);
-		mProductBacklogListView.setSelector( R.drawable.projectitem_selector );
+		mProductBacklogListView.setSelector(R.drawable.projectitem_selector );
 		
 		mProductBacklogItemManager = new ProductBacklogItemManager();
 		mComparator = new ImportanceDesComparator();
@@ -72,6 +68,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.common, menu);
+		inflater.inflate(R.menu.filter, menu);
 		inflater.inflate(R.menu.productbacklog, menu);
 		MenuItem changeViewProductBacklog = menu.findItem(R.id.changeViewProductBacklog);
 		mRefreshMenuItem = (MenuItem) menu.findItem(R.id.refreshProductBacklog);
@@ -114,30 +111,27 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		LayoutInflater inflater = LayoutInflater.from(mContext);
 		final View filterAlertView = inflater.inflate(R.layout.productbacklog_filter, null);
 		
-		Spinner spinner = (Spinner)filterAlertView.findViewById(R.id.filterType);
-		String[] filterType = {"Value","Estimation","Important"};
-	    ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, filterType);
-		spinner.setAdapter(listAdapter);
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext); // 
 		builder.setTitle("Filter Story");
-		builder.setView( filterAlertView );
+		builder.setView(filterAlertView);
 		
 		builder.setPositiveButton("Descending", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Spinner spinner = (Spinner)filterAlertView.findViewById(R.id.filterType);
-				String getFilterItem = spinner.getSelectedItem().toString();
-				setDesFilter(getFilterItem);
-				
+				RadioGroup group = (RadioGroup)filterAlertView.findViewById(R.id.filterGroup);
+				RadioButton filterItem = (RadioButton)filterAlertView.findViewById(group.getCheckedRadioButtonId());
+				String filterText = (String) filterItem.getText();
+				setDesFilter(filterText);
 				refreshAdapter();
 			}
 		});
 		builder.setNegativeButton("Ascending", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Spinner spinner = (Spinner)filterAlertView.findViewById(R.id.filterType);
-				String getFilterItem = spinner.getSelectedItem().toString();
-				setAcsFilter(getFilterItem);
+				RadioGroup group = (RadioGroup)filterAlertView.findViewById(R.id.filterGroup);
+				RadioButton filterItem = (RadioButton)filterAlertView.findViewById(group.getCheckedRadioButtonId());
+				String filterText = (String) filterItem.getText();
+				setAcsFilter(filterText);
 				refreshAdapter();
 			}
 		});
@@ -146,6 +140,10 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		dialog.setCanceledOnTouchOutside(false);
 	}
 	
+	/**
+	 * 設定 Story 降冪排序
+	 * @param getFilterItem
+	 */
 	public void setDesFilter(String getFilterItem){
 		if(getFilterItem.equals("Value")){
 			mComparator = new ValueDesComparator();
@@ -158,6 +156,10 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		}
 	}
 	
+	/**
+	 * 設定 Story 升冪排序
+	 * @param getFilterItem
+	 */
 	public void setAcsFilter(String getFilterItem){
 		if(getFilterItem.equals("Value")){
 			mComparator = new ValueAcsComparator();
@@ -169,22 +171,31 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 			mComparator = new ImportanceAcsComparator();
 		}
 	}
+	
 	/**
 	 * 點擊 Quick Edit 事件
 	 * @param item
 	 */
 	public void onQuickEdit(MenuItem item) {
-		LayoutInflater inflater = LayoutInflater.from(mContext);
-		final View storyCardView = inflater.inflate(R.layout.storyitem, null);
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(mContext); 
-		builder.setTitle("Quick Edit");
-		builder.setView( storyCardView );
-		builder.setPositiveButton("Save", null);
-		builder.setNegativeButton("Cancel", null);
-		AlertDialog dialog = builder.create();
-		dialog.show();
-		dialog.setCanceledOnTouchOutside(false);
+//		LayoutInflater inflater = LayoutInflater.from(mContext);
+//		final View storyCardView = inflater.inflate(R.layout.productbacklog_quick_edit, null);
+//		
+//		AlertDialog.Builder builder = new AlertDialog.Builder(mContext); 
+//		builder.setTitle("Quick Edit");
+//		builder.setView(storyCardView);
+//		builder.setPositiveButton("Save", null);
+//		builder.setNegativeButton("Cancel", null);
+//		AlertDialog dialog = builder.create();
+//		dialog.show();
+//		dialog.setCanceledOnTouchOutside(false);
+
+		Intent intent = new Intent();
+		intent.setClass(this, ProductBacklogListQuickEditViewActivity.class);
+		Bundle bundle = new Bundle();
+		bundle.putString("projectID", mProjectID);
+		intent.putExtras(bundle);
+		startActivity(intent);
+//		this.finish();
 	}
 	
 	/**
@@ -256,7 +267,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		String value = ((EditText) view.findViewById(R.id.storyValue)).getText().toString();
 		String estimation = ((EditText) view.findViewById(R.id.storyEstimation)).getText().toString();
 		String importance = ((EditText) view.findViewById(R.id.storyImportance)).getText().toString();
-		List<TagObject> tagList = new ArrayList<TagObject>(); // TODO: 從view中取得tag
+		List<TagObject> tagList = new ArrayList<TagObject>(); // 從view中取得tag
 		
 		story.set_name(name);
 		story.set_sprint("0");
@@ -269,7 +280,6 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		
 		return story;
 	}
-	
 	
 	private void initialProductBacklogListViewAdpater() {
 		mStoryList = mProductBacklogItemManager.retrieveProductBacklogAllItems(mProjectID);
@@ -299,7 +309,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	private Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			mProductBacklogListView.setAdapter( mProductBacklogListViewAdapter );
+			mProductBacklogListView.setAdapter(mProductBacklogListViewAdapter);
 			mRefreshMenuItem.setTitle(EzScrumAppUtil.getCurrentSystemTime());
 			mProgressDialog.dismiss(); // 將Progress關閉
 		}

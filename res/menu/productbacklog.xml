@@ -17,11 +17,6 @@
         android:showAsAction="ifRoom|withText"
         android:title="Refresh"/>
     <item
-        android:id="@+id/filterStory"
-        android:showAsAction="ifRoom|withText"
-        android:title="Filter Story">
-    </item>
-    <item
         android:id="@+id/changeViewProductBacklog"
         android:icon="@drawable/grid_view"
         android:title="Change View"/>

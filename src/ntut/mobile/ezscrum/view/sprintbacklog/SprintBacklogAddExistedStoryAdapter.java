@@ -7,8 +7,6 @@ import java.util.Map;
 
 import ntut.mobile.ezscrum.model.StoryObject;
 import ntut.mobile.ezscrum.view.R;
-import ntut.mobile.ezscrum.view.R.id;
-import ntut.mobile.ezscrum.view.R.layout;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

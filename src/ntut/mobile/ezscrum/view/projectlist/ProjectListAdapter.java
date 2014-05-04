@@ -4,9 +4,6 @@ import java.util.List;
 
 import ntut.mobile.ezscrum.model.ProjectObject;
 import ntut.mobile.ezscrum.view.R;
-import ntut.mobile.ezscrum.view.R.drawable;
-import ntut.mobile.ezscrum.view.R.id;
-import ntut.mobile.ezscrum.view.R.layout;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

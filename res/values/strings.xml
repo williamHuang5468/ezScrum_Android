@@ -5,6 +5,8 @@
     <string name="projectList">Project List</string>
     <string name="featureView">Feature View</string>
     <string name="productBacklog">Product Backlog</string>
+    <string name="productBacklogReference">Product Backlog Reference</string>
+    <string name="quickEdit">Quick Edit</string>
     <string name="sprintBacklog">Sprint Backlog</string>
     <string name="sprintPlan">Sprint Plan</string>
     <string name="importance">Importance</string>
@@ -19,9 +21,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="filter_type">Filter Type</string>
     <string name="filter_story">Filter Story</string>
-    <string name="Save">Save</string>
-    <string name="Cancel">Cancel</string>
-    <string name="Reference">Reference</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="reference">Reference</string>
     
     
 </resources>

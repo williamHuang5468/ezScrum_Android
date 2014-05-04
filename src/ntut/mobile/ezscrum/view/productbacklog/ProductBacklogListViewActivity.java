@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
 import ntut.mobile.ezscrum.controller.productbacklog.ProductBacklogItemManager;
 import ntut.mobile.ezscrum.model.StoryObject;
 import ntut.mobile.ezscrum.model.TagObject;
 import ntut.mobile.ezscrum.util.EzScrumAppUtil;
 import ntut.mobile.ezscrum.view.BaseActivity;
 import ntut.mobile.ezscrum.view.R;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -177,25 +177,12 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	 * @param item
 	 */
 	public void onQuickEdit(MenuItem item) {
-//		LayoutInflater inflater = LayoutInflater.from(mContext);
-//		final View storyCardView = inflater.inflate(R.layout.productbacklog_quick_edit, null);
-//		
-//		AlertDialog.Builder builder = new AlertDialog.Builder(mContext); 
-//		builder.setTitle("Quick Edit");
-//		builder.setView(storyCardView);
-//		builder.setPositiveButton("Save", null);
-//		builder.setNegativeButton("Cancel", null);
-//		AlertDialog dialog = builder.create();
-//		dialog.show();
-//		dialog.setCanceledOnTouchOutside(false);
-
 		Intent intent = new Intent();
-		intent.setClass(this, ProductBacklogListQuickEditViewActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putString("projectID", mProjectID);
 		intent.putExtras(bundle);
+		intent.setClass(this, ProductBacklogQuickEditViewActivity.class);
 		startActivity(intent);
-//		this.finish();
 	}
 	
 	/**
@@ -209,7 +196,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		//	建立 New Story 的 AlertDialog
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle("New Story");
-		builder.setView( storyCardView );
+		builder.setView(storyCardView);
 		builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -306,6 +293,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		handler.sendEmptyMessage(0);
 	}
 	
+	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {

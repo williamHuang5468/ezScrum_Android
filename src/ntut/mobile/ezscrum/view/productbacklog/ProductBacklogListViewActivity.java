@@ -226,7 +226,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	public void onRefreshClick(MenuItem item) {
 		refreshAdapter();
 	}
-	
+
 	/**
 	 * 點擊 change view 事件
 	 * @param item

@@ -9,6 +9,7 @@
     <item
         android:id="@+id/quickEdit"
         android:showAsAction="ifRoom|withText"
+        android:icon="@drawable/quick_edit"
         android:title="Quick Edit">
     </item>
     <item

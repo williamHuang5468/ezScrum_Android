@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/addBackloggedItem"
-        android:icon="@drawable/button_newstory"
-        android:showAsAction="ifRoom|withText"
-        android:title="Add Story"/>
-    <item
         android:id="@+id/quickEdit"
         android:showAsAction="ifRoom|withText"
         android:icon="@drawable/quick_edit"
@@ -17,6 +12,11 @@
         android:icon="@drawable/button_refresh"
         android:showAsAction="ifRoom|withText"
         android:title="Refresh"/>
+    <item
+        android:id="@+id/addBackloggedItem"
+        android:icon="@drawable/button_newstory"
+        android:showAsAction="ifRoom|withText"
+        android:title="Add Story"/>
     <item
         android:id="@+id/changeViewProductBacklog"
         android:icon="@drawable/grid_view"

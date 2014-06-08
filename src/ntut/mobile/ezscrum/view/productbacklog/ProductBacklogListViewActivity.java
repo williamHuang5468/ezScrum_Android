@@ -67,9 +67,11 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.common, menu);
+
 		inflater.inflate(R.menu.filter, menu);
+		inflater.inflate(R.menu.common, menu);
 		inflater.inflate(R.menu.productbacklog, menu);
+		inflater.inflate(R.menu.search, menu);
 		MenuItem changeViewProductBacklog = menu.findItem(R.id.changeViewProductBacklog);
 		mRefreshMenuItem = (MenuItem) menu.findItem(R.id.refreshProductBacklog);
 		mRefreshMenuItem.setTitle( EzScrumAppUtil.getCurrentSystemTime() );
@@ -99,8 +101,37 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	        case R.id.quickEdit:
 	        	onQuickEdit(item);
 	        	break;
+	        case R.id.search:
+	        	onSearchStory(item);
+	        	break;
 	    }
 	    return super.onOptionsItemSelected(item);
+	}
+	
+	/**
+	 * 點擊 Search Story 事件
+	 * @param item
+	 */
+	public void onSearchStory(MenuItem item) {
+		LayoutInflater inflater = LayoutInflater.from(mContext);
+		final View storyCardView = inflater.inflate(R.layout.search, null);
+		
+		//	建立 Search Story 的 AlertDialog
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		builder.setTitle("Search Story");
+		builder.setView(storyCardView);
+		builder.setPositiveButton("Search", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+//				StoryObject newStory = getStoryObjectFromCardView(storyCardView);
+//				mProductBacklogItemManager.addProductBacklogItem(mProjectID, newStory);
+//				refreshAdapter();
+			}
+		});
+		builder.setNegativeButton("Cancel", null);
+		AlertDialog dialog = builder.create();
+		dialog.show();
+		dialog.setCanceledOnTouchOutside(false);
 	}
 	
 	/**

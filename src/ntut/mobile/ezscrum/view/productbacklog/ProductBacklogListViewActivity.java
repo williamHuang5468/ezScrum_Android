@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
 import ntut.mobile.ezscrum.controller.productbacklog.ProductBacklogItemManager;
 import ntut.mobile.ezscrum.model.StoryObject;
 import ntut.mobile.ezscrum.model.TagObject;
@@ -13,6 +14,7 @@ import ntut.mobile.ezscrum.view.R;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,8 +30,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SearchView;
 
-public class ProductBacklogListViewActivity extends BaseActivity implements Runnable  {
+public class ProductBacklogListViewActivity extends BaseActivity implements Runnable {
 	private String mProjectID;
 	private ListView mProductBacklogListView;
 	private List<StoryObject> mStoryList;
@@ -40,7 +43,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	private ProgressDialog mProgressDialog;
 	private MenuItem mRefreshMenuItem;
 	private Comparator<StoryObject> mComparator;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,22 +51,22 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		setTitle(R.string.productBacklog);
 		mContext = this;
 		mProductBacklogListView = (ListView) findViewById(R.id.productbacklog_listview);
-		mProductBacklogListView.setSelector(R.drawable.projectitem_selector );
-		
+		mProductBacklogListView.setSelector(R.drawable.projectitem_selector);
+
 		mProductBacklogItemManager = new ProductBacklogItemManager();
 		mComparator = new ImportanceDesComparator();
-		
-		//	從前一個activity取得資料
+
+		// 從前一個activity取得資料
 		Bundle bundle = this.getIntent().getExtras();
 		mProjectID = bundle.getString("projectID");
 		refreshAdapter();
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		finish();
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -72,139 +75,139 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		inflater.inflate(R.menu.common, menu);
 		inflater.inflate(R.menu.productbacklog, menu);
 		inflater.inflate(R.menu.search, menu);
-		MenuItem changeViewProductBacklog = menu.findItem(R.id.changeViewProductBacklog);
+		MenuItem changeViewProductBacklog = menu
+				.findItem(R.id.changeViewProductBacklog);
 		mRefreshMenuItem = (MenuItem) menu.findItem(R.id.refreshProductBacklog);
-		mRefreshMenuItem.setTitle( EzScrumAppUtil.getCurrentSystemTime() );
-		
+		mRefreshMenuItem.setTitle(EzScrumAppUtil.getCurrentSystemTime());
+
+		// 搜尋功能
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		SearchView searchView = (SearchView) menu.findItem(R.id.search)
+				.getActionView();
+		searchView.setSearchableInfo(searchManager
+				.getSearchableInfo(getComponentName()));
+		// Listener的設定
+		SearchView.OnQueryTextListener queryListener = new SearchView.OnQueryTextListener() {
+			@Override
+			public boolean onQueryTextChange(String searchKeyword) {
+				mProductBacklogListViewAdapter.getFilter().filter(searchKeyword);
+				return true;
+			}
+
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				return true;
+			}
+		};
+		searchView.setOnQueryTextListener(queryListener);
+
 		changeViewProductBacklog.setIcon(R.drawable.grid_view);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-        	case R.id.manageTagProductBacklog:
-        		onManageTagClick(item);
-        		break;
-        	case R.id.addBackloggedItem:
-        		onAddStoryClick(item);
-        		break;
-	        case R.id.refreshProductBacklog:
-	        	onRefreshClick(item);
-	        	break;
-	        case R.id.changeViewProductBacklog:
-	        	onChangeViewClick(item);
-	        	break;
-	        case R.id.filterStory:
-	        	onFilterStory(item);
-	        	break;
-	        case R.id.quickEdit:
-	        	onQuickEdit(item);
-	        	break;
-	        case R.id.search:
-	        	onSearchStory(item);
-	        	break;
-	    }
-	    return super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+		case R.id.manageTagProductBacklog:
+			onManageTagClick(item);
+			break;
+		case R.id.addBackloggedItem:
+			onAddStoryClick(item);
+			break;
+		case R.id.refreshProductBacklog:
+			onRefreshClick(item);
+			break;
+		case R.id.changeViewProductBacklog:
+			onChangeViewClick(item);
+			break;
+		case R.id.filterStory:
+			onFilterStory(item);
+			break;
+		case R.id.quickEdit:
+			onQuickEdit(item);
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
-	
-	/**
-	 * 點擊 Search Story 事件
-	 * @param item
-	 */
-	public void onSearchStory(MenuItem item) {
-		LayoutInflater inflater = LayoutInflater.from(mContext);
-		final View storyCardView = inflater.inflate(R.layout.search, null);
-		
-		//	建立 Search Story 的 AlertDialog
-		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-		builder.setTitle("Search Story");
-		builder.setView(storyCardView);
-		builder.setPositiveButton("Search", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-//				StoryObject newStory = getStoryObjectFromCardView(storyCardView);
-//				mProductBacklogItemManager.addProductBacklogItem(mProjectID, newStory);
-//				refreshAdapter();
-			}
-		});
-		builder.setNegativeButton("Cancel", null);
-		AlertDialog dialog = builder.create();
-		dialog.show();
-		dialog.setCanceledOnTouchOutside(false);
-	}
-	
+
 	/**
 	 * 點擊 Filter Story 事件
+	 * 
 	 * @param item
 	 */
 	public void onFilterStory(MenuItem item) {
 		LayoutInflater inflater = LayoutInflater.from(mContext);
-		final View filterAlertView = inflater.inflate(R.layout.productbacklog_filter, null);
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(mContext); // 
+		final View filterAlertView = inflater.inflate(
+				R.layout.productbacklog_filter, null);
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext); //
 		builder.setTitle("Filter Story");
 		builder.setView(filterAlertView);
-		
-		builder.setPositiveButton("Descending", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				RadioGroup group = (RadioGroup)filterAlertView.findViewById(R.id.filterGroup);
-				RadioButton filterItem = (RadioButton)filterAlertView.findViewById(group.getCheckedRadioButtonId());
-				String filterText = (String) filterItem.getText();
-				setDesFilter(filterText);
-				refreshAdapter();
-			}
-		});
-		builder.setNegativeButton("Ascending", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				RadioGroup group = (RadioGroup)filterAlertView.findViewById(R.id.filterGroup);
-				RadioButton filterItem = (RadioButton)filterAlertView.findViewById(group.getCheckedRadioButtonId());
-				String filterText = (String) filterItem.getText();
-				setAcsFilter(filterText);
-				refreshAdapter();
-			}
-		});
+
+		builder.setPositiveButton("Descending",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						RadioGroup group = (RadioGroup) filterAlertView
+								.findViewById(R.id.filterGroup);
+						RadioButton filterItem = (RadioButton) filterAlertView
+								.findViewById(group.getCheckedRadioButtonId());
+						String filterText = (String) filterItem.getText();
+						setDesFilter(filterText);
+						refreshAdapter();
+					}
+				});
+		builder.setNegativeButton("Ascending",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						RadioGroup group = (RadioGroup) filterAlertView
+								.findViewById(R.id.filterGroup);
+						RadioButton filterItem = (RadioButton) filterAlertView
+								.findViewById(group.getCheckedRadioButtonId());
+						String filterText = (String) filterItem.getText();
+						setAcsFilter(filterText);
+						refreshAdapter();
+					}
+				});
 		AlertDialog dialog = builder.create();
 		dialog.show();
 		dialog.setCanceledOnTouchOutside(false);
 	}
-	
+
 	/**
 	 * 設定 Story 降冪排序
+	 * 
 	 * @param getFilterItem
 	 */
-	public void setDesFilter(String getFilterItem){
-		if(getFilterItem.equals("Value")){
+	public void setDesFilter(String getFilterItem) {
+		if (getFilterItem.equals("Value")) {
 			mComparator = new ValueDesComparator();
-		}
-		else if(getFilterItem.equals("Estimation")){
+		} else if (getFilterItem.equals("Estimation")) {
 			mComparator = new EstimationDesComparator();
-		}
-		else{
+		} else {
 			mComparator = new ImportanceDesComparator();
 		}
 	}
-	
+
 	/**
 	 * 設定 Story 升冪排序
+	 * 
 	 * @param getFilterItem
 	 */
-	public void setAcsFilter(String getFilterItem){
-		if(getFilterItem.equals("Value")){
+	public void setAcsFilter(String getFilterItem) {
+		if (getFilterItem.equals("Value")) {
 			mComparator = new ValueAcsComparator();
-		}
-		else if(getFilterItem.equals("Estimation")){
+		} else if (getFilterItem.equals("Estimation")) {
 			mComparator = new EstimationAcsComparator();
-		}
-		else{
+		} else {
 			mComparator = new ImportanceAcsComparator();
 		}
 	}
-	
+
 	/**
 	 * 點擊 Quick Edit 事件
+	 * 
 	 * @param item
 	 */
 	public void onQuickEdit(MenuItem item) {
@@ -215,43 +218,48 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		intent.setClass(this, ProductBacklogQuickEditViewActivity.class);
 		startActivity(intent);
 	}
-	
+
 	/**
 	 * 點擊 Add Story 事件
+	 * 
 	 * @param item
 	 */
 	public void onAddStoryClick(MenuItem item) {
 		LayoutInflater inflater = LayoutInflater.from(mContext);
 		final View storyCardView = inflater.inflate(R.layout.storyitem, null);
-		
-		//	建立 New Story 的 AlertDialog
+
+		// 建立 New Story 的 AlertDialog
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle("New Story");
 		builder.setView(storyCardView);
-		builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				StoryObject newStory = getStoryObjectFromCardView(storyCardView);
-				mProductBacklogItemManager.addProductBacklogItem(mProjectID, newStory);
-				refreshAdapter();
-			}
-		});
+		builder.setPositiveButton("Save",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						StoryObject newStory = getStoryObjectFromCardView(storyCardView);
+						mProductBacklogItemManager.addProductBacklogItem(
+								mProjectID, newStory);
+						refreshAdapter();
+					}
+				});
 		builder.setNegativeButton("Cancel", null);
 		AlertDialog dialog = builder.create();
 		dialog.show();
 		dialog.setCanceledOnTouchOutside(false);
 	}
-	
+
 	/**
 	 * 點擊 Manage Tag 事件
+	 * 
 	 * @param item
 	 */
 	public void onManageTagClick(MenuItem item) {
 		refreshAdapter();
 	}
-	
+
 	/**
 	 * 點擊 Refresh 事件
+	 * 
 	 * @param item
 	 */
 	public void onRefreshClick(MenuItem item) {
@@ -260,6 +268,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 
 	/**
 	 * 點擊 change view 事件
+	 * 
 	 * @param item
 	 */
 	public void onChangeViewClick(MenuItem item) {
@@ -271,22 +280,29 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		intent.setClass(this, ProductBacklogGridViewActivity.class);
 		startActivity(intent);
 	}
-	
+
 	/**
 	 * 從StoryCard取出資料
+	 * 
 	 * @param view
 	 * @return StoryObject
 	 */
 	private StoryObject getStoryObjectFromCardView(View view) {
 		StoryObject story = new StoryObject();
-		String name = ((EditText) view.findViewById(R.id.storyName)).getText().toString();
-		String note = ((EditText) view.findViewById(R.id.storyNote)).getText().toString();
-		String howToDemo = ((EditText) view.findViewById(R.id.storyHowToDemo)).getText().toString();
-		String value = ((EditText) view.findViewById(R.id.storyValue)).getText().toString();
-		String estimation = ((EditText) view.findViewById(R.id.storyEstimation)).getText().toString();
-		String importance = ((EditText) view.findViewById(R.id.storyImportance)).getText().toString();
+		String name = ((EditText) view.findViewById(R.id.storyName)).getText()
+				.toString();
+		String note = ((EditText) view.findViewById(R.id.storyNote)).getText()
+				.toString();
+		String howToDemo = ((EditText) view.findViewById(R.id.storyHowToDemo))
+				.getText().toString();
+		String value = ((EditText) view.findViewById(R.id.storyValue))
+				.getText().toString();
+		String estimation = ((EditText) view.findViewById(R.id.storyEstimation))
+				.getText().toString();
+		String importance = ((EditText) view.findViewById(R.id.storyImportance))
+				.getText().toString();
 		List<TagObject> tagList = new ArrayList<TagObject>(); // 從view中取得tag
-		
+
 		story.set_name(name);
 		story.set_sprint("0");
 		story.set_notes(note);
@@ -295,35 +311,40 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		story.set_estimation(estimation);
 		story.set_importance(importance);
 		story.set_tagList(tagList);
-		
+
 		return story;
 	}
-	
+
 	private void initialProductBacklogListViewAdpater() {
-		mStoryList = mProductBacklogItemManager.retrieveProductBacklogAllItems(mProjectID);
+		mStoryList = mProductBacklogItemManager
+				.retrieveProductBacklogAllItems(mProjectID);
 		Collections.sort(mStoryList, mComparator);
-		mTagList = mProductBacklogItemManager.readProductBacklogTagList(mProjectID);
-		mProductBacklogListViewAdapter = new ProductBacklogListViewAdapter(ProductBacklogListViewActivity.this, mStoryList, mTagList);
+		mTagList = mProductBacklogItemManager
+				.readProductBacklogTagList(mProjectID);
+		mProductBacklogListViewAdapter = new ProductBacklogListViewAdapter(
+				ProductBacklogListViewActivity.this, mStoryList, mTagList);
 		mProductBacklogListViewAdapter.setProjectInformation(mProjectID);
+
 	}
-	
+
 	/**
 	 * 更新Adapter, 重新於Server取出, 並更新畫面
 	 */
 	public void refreshAdapter() {
 		// 顯示Progress對話方塊
 		mProgressDialog = ProgressDialog.show(this, "", "Loading...", true);
-		
+
 		Thread thread = new Thread(this);
 		thread.start();
 	}
 
 	public void run() {
-		//	設定 product backlog list view adapter並顯示 
-		initialProductBacklogListViewAdpater();	//	透過web service取得product backlog所需的資料
+		// 設定 product backlog list view adapter並顯示
+		initialProductBacklogListViewAdpater(); // 透過web service取得product
+												// backlog所需的資料
 		handler.sendEmptyMessage(0);
 	}
-	
+
 	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler() {
 		@Override
@@ -333,37 +354,46 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 			mProgressDialog.dismiss(); // 將Progress關閉
 		}
 	};
-	
+
 	private class ImportanceAcsComparator implements Comparator<StoryObject> {
 		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(firstObject.get_importance())-Integer.parseInt(secondObject.get_importance());
+			return Integer.parseInt(firstObject.get_importance())
+					- Integer.parseInt(secondObject.get_importance());
 		}
 	}
+
 	private class ImportanceDesComparator implements Comparator<StoryObject> {
 		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(secondObject.get_importance())-Integer.parseInt(firstObject.get_importance());
+			return Integer.parseInt(secondObject.get_importance())
+					- Integer.parseInt(firstObject.get_importance());
 		}
 	}
 
 	private class ValueAcsComparator implements Comparator<StoryObject> {
 		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(firstObject.get_value())-Integer.parseInt(secondObject.get_value());
+			return Integer.parseInt(firstObject.get_value())
+					- Integer.parseInt(secondObject.get_value());
 		}
 	}
+
 	private class ValueDesComparator implements Comparator<StoryObject> {
 		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(secondObject.get_value())-Integer.parseInt(firstObject.get_value());
-		}
-	} 
-	
-	private class EstimationAcsComparator implements Comparator<StoryObject> {
-		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(firstObject.get_estimation())-Integer.parseInt(secondObject.get_estimation());
+			return Integer.parseInt(secondObject.get_value())
+					- Integer.parseInt(firstObject.get_value());
 		}
 	}
+
+	private class EstimationAcsComparator implements Comparator<StoryObject> {
+		public int compare(StoryObject firstObject, StoryObject secondObject) {
+			return Integer.parseInt(firstObject.get_estimation())
+					- Integer.parseInt(secondObject.get_estimation());
+		}
+	}
+
 	private class EstimationDesComparator implements Comparator<StoryObject> {
 		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(secondObject.get_estimation())-Integer.parseInt(firstObject.get_estimation());
+			return Integer.parseInt(secondObject.get_estimation())
+					- Integer.parseInt(firstObject.get_estimation());
 		}
-	} 
+	}
 }

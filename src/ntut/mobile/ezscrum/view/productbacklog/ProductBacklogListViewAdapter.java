@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import ntut.mobile.ezscrum.controller.productbacklog.ProductBacklogItemManager;
 import ntut.mobile.ezscrum.model.StoryObject;
 import ntut.mobile.ezscrum.model.TagObject;
 import ntut.mobile.ezscrum.view.R;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,12 +19,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-public class ProductBacklogListViewAdapter extends BaseAdapter {
+public class ProductBacklogListViewAdapter extends BaseAdapter implements Filterable{
 	private Context context;
 	private List<StoryObject> storyList;
 	private List<TagObject> tagList;
@@ -33,12 +35,17 @@ public class ProductBacklogListViewAdapter extends BaseAdapter {
 	private Map<String, Integer> tagImageResouce, pairTagAndImage;
 	private ProductBacklogItemManager productBacklogItemManager;
 	private final int TAG_SIZE_LIMIT = 7;
+	private Filter storyFilter;
+	private List<StoryObject> sourceStoryList;
 	
 	public ProductBacklogListViewAdapter(Context context ,List<StoryObject> storyList, List<TagObject> tagList){
 		this.context = context;
 		this.storyList = storyList;
 		this.tagList = tagList;
 		this.inflater = LayoutInflater.from(this.context);
+		
+		this.sourceStoryList = storyList;
+		
 		productBacklogItemManager = new ProductBacklogItemManager();
 		pairTagAndImage = new HashMap<String, Integer>();
 		mapImageResouce();
@@ -318,5 +325,49 @@ public class ProductBacklogListViewAdapter extends BaseAdapter {
 		story.set_tagList(tagList);
 		
 		return story;
+	}
+
+	@Override
+	public Filter getFilter() {
+		if (storyFilter == null)
+			storyFilter = new StoryFilter();
+		return storyFilter;
+	}
+	
+	private class StoryFilter extends Filter {
+		@SuppressLint("DefaultLocale")
+		@Override
+		protected FilterResults performFiltering(CharSequence constraint) {
+			FilterResults results = new FilterResults();
+			if (constraint == null || constraint.length() == 0) {
+				// 沒有輸入任何字，傳回List
+				results.values = sourceStoryList;
+				results.count = sourceStoryList.size();
+			}
+			else {
+				// 搜尋符合輸入的Keyword，符合的存入mStoryList
+				List<StoryObject> searchResult = new ArrayList<StoryObject>();
+				for (StoryObject story : storyList) {
+					if (story.get_name().contains(constraint.toString())){
+						searchResult.add(story);
+					}
+				}
+				results.values = searchResult;
+				results.count = searchResult.size();
+			}
+			return results;
+		}
+
+		@Override
+		protected void publishResults(CharSequence constraint,
+				FilterResults results) {
+			// 更新ListView
+			if (results.count == 0)
+				notifyDataSetInvalidated();
+			else {
+				storyList = (List<StoryObject>) results.values;
+				notifyDataSetChanged();
+			}
+		}
 	}
 }

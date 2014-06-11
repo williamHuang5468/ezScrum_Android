@@ -1,8 +1,6 @@
 package ntut.mobile.ezscrum.view.productbacklog;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import ntut.mobile.ezscrum.controller.productbacklog.ProductBacklogItemManager;
@@ -42,7 +40,6 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	private ProductBacklogListViewAdapter mProductBacklogListViewAdapter;
 	private ProgressDialog mProgressDialog;
 	private MenuItem mRefreshMenuItem;
-	private Comparator<StoryObject> mComparator;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +51,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		mProductBacklogListView.setSelector(R.drawable.projectitem_selector);
 
 		mProductBacklogItemManager = new ProductBacklogItemManager();
-		mComparator = new ImportanceDesComparator();
+//		mComparator = new ImportanceDesComparator();
 
 		// 從前一個activity取得資料
 		Bundle bundle = this.getIntent().getExtras();
@@ -137,72 +134,35 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	 */
 	public void onFilterStory(MenuItem item) {
 		LayoutInflater inflater = LayoutInflater.from(mContext);
-		final View filterAlertView = inflater.inflate(
-				R.layout.productbacklog_filter, null);
+		final View filterAlertView = inflater.inflate(R.layout.productbacklog_filter, null);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext); //
 		builder.setTitle("Filter Story");
 		builder.setView(filterAlertView);
 
-		builder.setPositiveButton("Descending",
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						RadioGroup group = (RadioGroup) filterAlertView
-								.findViewById(R.id.filterGroup);
-						RadioButton filterItem = (RadioButton) filterAlertView
-								.findViewById(group.getCheckedRadioButtonId());
-						String filterText = (String) filterItem.getText();
-						setDesFilter(filterText);
-						refreshAdapter();
-					}
-				});
-		builder.setNegativeButton("Ascending",
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						RadioGroup group = (RadioGroup) filterAlertView
-								.findViewById(R.id.filterGroup);
-						RadioButton filterItem = (RadioButton) filterAlertView
-								.findViewById(group.getCheckedRadioButtonId());
-						String filterText = (String) filterItem.getText();
-						setAcsFilter(filterText);
-						refreshAdapter();
-					}
-				});
+		builder.setPositiveButton("Descending",	new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				RadioGroup group = (RadioGroup) filterAlertView.findViewById(R.id.filterGroup);
+				RadioButton filterItem = (RadioButton) filterAlertView.findViewById(group.getCheckedRadioButtonId());
+				String filterText = (String) filterItem.getText();
+				mProductBacklogListViewAdapter.setDesFilter(filterText);
+				mProductBacklogListViewAdapter.sort(mStoryList);
+			}
+		});
+		builder.setNegativeButton("Ascending", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				RadioGroup group = (RadioGroup) filterAlertView.findViewById(R.id.filterGroup);
+				RadioButton filterItem = (RadioButton) filterAlertView.findViewById(group.getCheckedRadioButtonId());
+				String filterText = (String) filterItem.getText();
+				mProductBacklogListViewAdapter.setAcsFilter(filterText);
+				mProductBacklogListViewAdapter.sort(mStoryList);
+			}
+		});
 		AlertDialog dialog = builder.create();
 		dialog.show();
 		dialog.setCanceledOnTouchOutside(false);
-	}
-
-	/**
-	 * 設定 Story 降冪排序
-	 * 
-	 * @param getFilterItem
-	 */
-	public void setDesFilter(String getFilterItem) {
-		if (getFilterItem.equals("Value")) {
-			mComparator = new ValueDesComparator();
-		} else if (getFilterItem.equals("Estimation")) {
-			mComparator = new EstimationDesComparator();
-		} else {
-			mComparator = new ImportanceDesComparator();
-		}
-	}
-
-	/**
-	 * 設定 Story 升冪排序
-	 * 
-	 * @param getFilterItem
-	 */
-	public void setAcsFilter(String getFilterItem) {
-		if (getFilterItem.equals("Value")) {
-			mComparator = new ValueAcsComparator();
-		} else if (getFilterItem.equals("Estimation")) {
-			mComparator = new EstimationAcsComparator();
-		} else {
-			mComparator = new ImportanceAcsComparator();
-		}
 	}
 
 	/**
@@ -318,13 +278,12 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 	private void initialProductBacklogListViewAdpater() {
 		mStoryList = mProductBacklogItemManager
 				.retrieveProductBacklogAllItems(mProjectID);
-		Collections.sort(mStoryList, mComparator);
 		mTagList = mProductBacklogItemManager
 				.readProductBacklogTagList(mProjectID);
 		mProductBacklogListViewAdapter = new ProductBacklogListViewAdapter(
 				ProductBacklogListViewActivity.this, mStoryList, mTagList);
 		mProductBacklogListViewAdapter.setProjectInformation(mProjectID);
-
+		mProductBacklogListViewAdapter.sort(mStoryList);
 	}
 
 	/**
@@ -354,46 +313,4 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 			mProgressDialog.dismiss(); // 將Progress關閉
 		}
 	};
-
-	private class ImportanceAcsComparator implements Comparator<StoryObject> {
-		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(firstObject.get_importance())
-					- Integer.parseInt(secondObject.get_importance());
-		}
-	}
-
-	private class ImportanceDesComparator implements Comparator<StoryObject> {
-		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(secondObject.get_importance())
-					- Integer.parseInt(firstObject.get_importance());
-		}
-	}
-
-	private class ValueAcsComparator implements Comparator<StoryObject> {
-		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(firstObject.get_value())
-					- Integer.parseInt(secondObject.get_value());
-		}
-	}
-
-	private class ValueDesComparator implements Comparator<StoryObject> {
-		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(secondObject.get_value())
-					- Integer.parseInt(firstObject.get_value());
-		}
-	}
-
-	private class EstimationAcsComparator implements Comparator<StoryObject> {
-		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(firstObject.get_estimation())
-					- Integer.parseInt(secondObject.get_estimation());
-		}
-	}
-
-	private class EstimationDesComparator implements Comparator<StoryObject> {
-		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(secondObject.get_estimation())
-					- Integer.parseInt(firstObject.get_estimation());
-		}
-	}
 }

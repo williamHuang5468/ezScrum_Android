@@ -10,6 +10,7 @@ import java.util.Map;
 import ntut.mobile.ezscrum.controller.productbacklog.ProductBacklogItemManager;
 import ntut.mobile.ezscrum.model.StoryObject;
 import ntut.mobile.ezscrum.model.TagObject;
+import ntut.mobile.ezscrum.sort.ComparatorFactory;
 import ntut.mobile.ezscrum.view.R;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -41,6 +42,7 @@ public class ProductBacklogListViewAdapter extends BaseAdapter implements Filter
 	private Filter storyFilter;
 	private List<StoryObject> sourceStoryList;
 	private Comparator<StoryObject> mComparator;
+	private ComparatorFactory mFactory;
 	
 	public ProductBacklogListViewAdapter(Context context ,List<StoryObject> storyList, List<TagObject> tagList){
 		this.context = context;
@@ -49,7 +51,8 @@ public class ProductBacklogListViewAdapter extends BaseAdapter implements Filter
 		this.inflater = LayoutInflater.from(this.context);
 		
 		this.sourceStoryList = storyList;
-		mComparator = new ImportanceDesComparator();
+		mFactory = new ComparatorFactory();
+		mComparator = mFactory.createComparator("Des", "Importance");
 		
 		productBacklogItemManager = new ProductBacklogItemManager();
 		pairTagAndImage = new HashMap<String, Integer>();
@@ -377,80 +380,15 @@ public class ProductBacklogListViewAdapter extends BaseAdapter implements Filter
 	}
 	
 	/**
-	 * 設定 Story 降冪排序
-	 * 
+	 * 設定 Story 升冪排序, 降冪排序
 	 * @param getFilterItem
 	 */
-	public void setDesFilter(String getFilterItem) {
-		if (getFilterItem.equals("Value")) {
-			mComparator = new ValueDesComparator();
-		} else if (getFilterItem.equals("Estimation")) {
-			mComparator = new EstimationDesComparator();
-		} else {
-			mComparator = new ImportanceDesComparator();
-		}
-	}
-
-	/**
-	 * 設定 Story 升冪排序
-	 * 
-	 * @param getFilterItem
-	 */
-	public void setAcsFilter(String getFilterItem) {
-		if (getFilterItem.equals("Value")) {
-			mComparator = new ValueAcsComparator();
-		} else if (getFilterItem.equals("Estimation")) {
-			mComparator = new EstimationAcsComparator();
-		} else {
-			System.out.println("hello");
-			mComparator = new ImportanceAcsComparator();
-		}
+	public void setFilter(String ascOrDes, String getFilterItem){
+		mComparator = mFactory.createComparator(ascOrDes, getFilterItem);
 	}
 	
 	public void sort(List<StoryObject> storyList){
 		Collections.sort(storyList, mComparator);
 		notifyDataSetChanged();
-	}
-	
-	public class ImportanceAcsComparator implements Comparator<StoryObject> {
-		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(firstObject.get_importance())
-					- Integer.parseInt(secondObject.get_importance());
-		}
-	}
-
-	public class ImportanceDesComparator implements Comparator<StoryObject> {
-		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(secondObject.get_importance())
-					- Integer.parseInt(firstObject.get_importance());
-		}
-	}
-
-	public class ValueAcsComparator implements Comparator<StoryObject> {
-		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(firstObject.get_value())
-					- Integer.parseInt(secondObject.get_value());
-		}
-	}
-
-	public class ValueDesComparator implements Comparator<StoryObject> {
-		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(secondObject.get_value())
-					- Integer.parseInt(firstObject.get_value());
-		}
-	}
-
-	public class EstimationAcsComparator implements Comparator<StoryObject> {
-		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(firstObject.get_estimation())
-					- Integer.parseInt(secondObject.get_estimation());
-		}
-	}
-
-	public class EstimationDesComparator implements Comparator<StoryObject> {
-		public int compare(StoryObject firstObject, StoryObject secondObject) {
-			return Integer.parseInt(secondObject.get_estimation())
-					- Integer.parseInt(firstObject.get_estimation());
-		}
 	}
 }

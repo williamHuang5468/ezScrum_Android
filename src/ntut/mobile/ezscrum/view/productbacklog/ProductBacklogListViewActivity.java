@@ -51,7 +51,6 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 		mProductBacklogListView.setSelector(R.drawable.projectitem_selector);
 
 		mProductBacklogItemManager = new ProductBacklogItemManager();
-//		mComparator = new ImportanceDesComparator();
 
 		// 從前一個activity取得資料
 		Bundle bundle = this.getIntent().getExtras();
@@ -146,7 +145,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 				RadioGroup group = (RadioGroup) filterAlertView.findViewById(R.id.filterGroup);
 				RadioButton filterItem = (RadioButton) filterAlertView.findViewById(group.getCheckedRadioButtonId());
 				String filterText = (String) filterItem.getText();
-				mProductBacklogListViewAdapter.setDesFilter(filterText);
+				mProductBacklogListViewAdapter.setFilter("Des", filterText);
 				mProductBacklogListViewAdapter.sort(mStoryList);
 			}
 		});
@@ -156,7 +155,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 				RadioGroup group = (RadioGroup) filterAlertView.findViewById(R.id.filterGroup);
 				RadioButton filterItem = (RadioButton) filterAlertView.findViewById(group.getCheckedRadioButtonId());
 				String filterText = (String) filterItem.getText();
-				mProductBacklogListViewAdapter.setAcsFilter(filterText);
+				mProductBacklogListViewAdapter.setFilter("Asc", filterText);
 				mProductBacklogListViewAdapter.sort(mStoryList);
 			}
 		});

@@ -388,7 +388,9 @@ public class ProductBacklogListViewAdapter extends BaseAdapter implements Filter
 	}
 	
 	public void sort(List<StoryObject> storyList){
-		Collections.sort(storyList, mComparator);
-		notifyDataSetChanged();
+		if(!(mComparator == null)){
+			Collections.sort(storyList, mComparator);
+			notifyDataSetChanged();
+		}
 	}
 }

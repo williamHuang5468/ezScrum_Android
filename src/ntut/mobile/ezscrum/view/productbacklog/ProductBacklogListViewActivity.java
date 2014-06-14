@@ -145,7 +145,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 				RadioGroup group = (RadioGroup) filterAlertView.findViewById(R.id.filterGroup);
 				RadioButton filterItem = (RadioButton) filterAlertView.findViewById(group.getCheckedRadioButtonId());
 				String filterText = (String) filterItem.getText();
-				mProductBacklogListViewAdapter.setFilter("Des", filterText);
+				mProductBacklogListViewAdapter.setComparator("Des", filterText);
 				mProductBacklogListViewAdapter.sort(mStoryList);
 			}
 		});
@@ -155,7 +155,7 @@ public class ProductBacklogListViewActivity extends BaseActivity implements Runn
 				RadioGroup group = (RadioGroup) filterAlertView.findViewById(R.id.filterGroup);
 				RadioButton filterItem = (RadioButton) filterAlertView.findViewById(group.getCheckedRadioButtonId());
 				String filterText = (String) filterItem.getText();
-				mProductBacklogListViewAdapter.setFilter("Asc", filterText);
+				mProductBacklogListViewAdapter.setComparator("Asc", filterText);
 				mProductBacklogListViewAdapter.sort(mStoryList);
 			}
 		});

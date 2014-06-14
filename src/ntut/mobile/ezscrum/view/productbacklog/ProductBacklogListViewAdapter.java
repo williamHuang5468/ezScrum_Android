@@ -383,7 +383,7 @@ public class ProductBacklogListViewAdapter extends BaseAdapter implements Filter
 	 * 設定 Story 升冪排序, 降冪排序
 	 * @param getFilterItem
 	 */
-	public void setFilter(String ascOrDes, String getFilterItem){
+	public void setComparator(String ascOrDes, String getFilterItem){
 		mComparator = mFactory.createComparator(ascOrDes, getFilterItem);
 	}
 	
